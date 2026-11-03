@@ -15,3 +15,5 @@ questions = [
     {"id": 3, "topic": "Java", "question": "What is Java?", "difficulty": "Easy"},
     {"id": 4, "topic": "C++", "question": "What is C++?", "difficulty": "Easy"},
 ]
+
+answer_history=[]
