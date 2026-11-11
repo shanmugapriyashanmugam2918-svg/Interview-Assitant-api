@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 DATABASE_URL = URL.create(
     "postgresql+psycopg",
     username="postgres",  # Use the username shown in pgAdmin
-    password="*****",
+    password="Priya@1829",
     host="localhost",
     port=5432,
     database="interview_assitant",
@@ -18,3 +18,10 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # parentclass for all models
 Base = declarative_base()
+
+def get_db():
+    db=SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close
