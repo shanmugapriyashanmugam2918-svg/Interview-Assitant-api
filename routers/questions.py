@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from models import Question
-from schemas import QuestionCreate
+from schemas import QuestionCreate, QuestionResponse
 from database import get_db
 
 router = APIRouter()
@@ -13,7 +13,7 @@ def get_questions(db: Session = Depends(get_db)):
     return questions
 
 
-@router.get("/questions/{id}")
+@router.get("/questions/{id}",response_model=QuestionResponse)
 def get_questions(id: int, db: Session = Depends(get_db)):
     questions = db.query(Question).filter(Question.id == id).first()
     return questions
@@ -36,6 +36,7 @@ def update_questions(
     if questions is None:
         raise HTTPException(status_code=404, detail="Question not found")
     questions.question = updated_ques.question
+    questions.topic=updated_ques.topic
     db.commit()
     db.refresh(questions)
     return questions

@@ -1,15 +1,25 @@
-from fastapi import APIRouter , HTTPException
-from schemas import Answer
-from data import  answer_history
+from fastapi import APIRouter, HTTPException, Depends
+from schemas import Answercreate
+from models import Answers, Question
+from sqlalchemy.orm import Session
+from database import get_db
+
+router = APIRouter()
 
 
-router=APIRouter()
-@router.post("/answer", status_code=201)
-def submit_answer(answer: Answer):
-    answer_history.append(answer.model_dump())
-    return {"status": "Received", "topic": answer.topic}
+@router.get("/answer")
+def get_ans(db: Session = Depends(get_db)):
+    answers = db.query(Answers).all()
+    return answers
 
 
-@router.get("/history", response_model=list[Answer])
-def gethistory():
-    return answer_history
+@router.post("/answer")
+def submit_answer(ans: Answercreate, db: Session = Depends(get_db)):
+    question_check = db.query(Question).filter(Question.id == ans.question_id).first()
+    if question_check is None:
+        raise HTTPException(status_code=404, detail="question not found")
+    new_answer = Answers(answer_text=ans.answer, question_id=ans.question_id)
+    db.add(new_answer)
+    db.commit()
+    db.refresh(new_answer)
+    return {"status": "Received", "answer": new_answer.answer_text}
