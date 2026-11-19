@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from schemas import Answercreate
-from models import Answers, Question
+from Schemas.answerSchema import Answercreate
+from Models.answerModels import Answers
+from Models.questionModels import Question
 from sqlalchemy.orm import Session
 from database import get_db
 

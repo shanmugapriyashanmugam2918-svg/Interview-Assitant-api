@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models import Topics
-from schemas import TopicCreate, TopicResponse
+from Models.topicModels import Topics
+from Schemas.topicSchemas import TopicCreate, TopicResponse
 from sqlalchemy.orm import Session
 from database import get_db
 

@@ -16,17 +16,3 @@ class Question(Base):
     @property
     def topic_name(self) -> Optional[str]:
         return self.topic.topic_name if self.topic else None
-
-
-class Answers(Base):
-    __tablename__="answers"
-    id = Column(Integer, primary_key=True)
-    answer_text = Column(String)
-    question_id=Column(Integer,ForeignKey("questions.id"))
-    question = relationship("Question", back_populates="answers")
-
-class Topics(Base):
-    __tablename__="topics"
-    id = Column(Integer, primary_key=True)
-    topic_name = Column(String)
-    questions = relationship("Question", back_populates="topic")
