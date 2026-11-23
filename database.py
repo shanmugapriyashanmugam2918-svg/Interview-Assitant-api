@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, URL
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 DATABASE_URL = URL.create(
-    "postgresql+psycopg",
+    "postgresql+psycopg2",
     username="postgres",  # Use the username shown in pgAdmin
     password="Priya@1829",
     host="localhost",
