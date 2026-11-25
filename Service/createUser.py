@@ -12,7 +12,7 @@ def register_user(db, user):
         raise HTTPException(status_code=400, detail="Email already exist")
 
     hashed_pwd = security.hash_pwd(user.password)
-    newUser = User(username=user.username, email=user.email, password=hashed_pwd)
+    newUser = User(username=user.username, email=user.email, password=hashed_pwd,role="user")
     db.add(newUser)
     db.commit()
     db.refresh(newUser)
