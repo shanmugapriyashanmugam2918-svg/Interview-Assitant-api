@@ -26,3 +26,5 @@ def test_login_load():
     assert response.status_code == 200
     data = response.json()
     assert "access_token" in data
+
+
