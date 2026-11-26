@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from models import Question, Topics
-from schemas import QuestionCreate, QuestionResponse
+from Models.topicModels import Topics
+from Models.questionModels import Question
+from Schemas.questionSchema import QuestionCreate, QuestionResponse
 from database import get_db
 
 router = APIRouter()
@@ -43,9 +44,7 @@ def update_questions(
     if questions is None:
         raise HTTPException(status_code=404, detail="Question not found")
     topic = (
-        db.query(Topics)
-        .filter(Topics.topic_name == updated_ques.topic_name)
-        .first()
+        db.query(Topics).filter(Topics.topic_name == updated_ques.topic_name).first()
     )
     if topic is None:
         topic = Topics(topic_name=updated_ques.topic_name)
